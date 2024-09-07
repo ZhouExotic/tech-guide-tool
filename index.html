@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Techniques Overview</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<!-- Main container for the content and sidebar -->
+<div class="content-container">
+    <!-- Sidebar for the total summary -->
+    <aside id="summary-sidebar">
+        <h2>Total Stats Summary</h2>
+        <div id="total-stats">No effects selected or parsed.</div>
+        <button id="reset-all" class="reset-button">Reset All</button>
+    </aside>
+
+    <!-- Main container for the table -->
+    <div class="table-container">
+        <table id="techniques-table">
+            <thead>
+                <tr>
+                    <th>Rank</th>
+                    <th>Technique Name</th>
+                    <th>Unlock</th>
+                    <th>Tier 3</th>
+                    <th>Tier 6</th>
+                    <th>Tier 9</th>
+                    <th>Tier 12</th>
+                    <th>Tier 15</th>
+                    <th>Select All</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Rows will be dynamically generated here -->
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Right sidebar for effects with search functionality -->
+    <aside id="effects-sidebar">
+        <h2>Effects List</h2>
+        <!-- Search input added here -->
+        <input type="text" id="effects-search" placeholder="Search effects...">
+        <ul id="effects-list"></ul>
+    </aside>
+
+</div>
+<script src="script.js"></script>
+</body>
+</html>
