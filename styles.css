@@ -183,4 +183,12 @@ button:hover {
     background-color: #45a049;
 }
 
+/* Darken the Technique Name column to indicate it is not clickable */
+#techniques-table td:nth-child(2) {
+    background-color: #1b1a1a; /* Slightly darker background */
+    color: #bbbbbb; /* Lighter text to contrast */
+    cursor: default; /* Default cursor to show it's not clickable */
+    font-weight: bold; /* Make the text bold */
+}
+
 
