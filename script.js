@@ -557,7 +557,7 @@ const techniquesData = [
       "tier3": "Water Law +4%",
       "tier6": "Water Law +6%",
       "tier9": "Metal Law +8%",
-      "tier12": "Earth Law 10%",
+      "tier12": "Earth Law +10%",
       "tier15": "Tech Stats +100%"
     },
     {
@@ -577,7 +577,7 @@ const techniquesData = [
       "tier3": "Abode Aura +2%",
       "tier6": "Crit Multiplier +5%",
       "tier9": "Crit Block +3%",
-      "tier12": "Fire Law 10%",
+      "tier12": "Fire Law +10%",
       "tier15": "Tech Stats +100%"
     },
     {
@@ -659,7 +659,7 @@ const techniquesData = [
       "tier3": "Relic DMG Reduction +1%",
       "tier6": "Water Law +6%",
       "tier9": "Earth Law +8%",
-      "tier12": "Metal Law 10%",
+      "tier12": "Metal Law +10%",
       "tier15": "Tech Stats +100%"
     },
     {
@@ -709,7 +709,7 @@ const techniquesData = [
       "tier3": "Respira +3%",
       "tier6": "Crit Multiplier +3%",
       "tier9": "Wood Law +8%",
-      "tier12": "Water Law 10%",
+      "tier12": "Water Law +10%",
       "tier15": "Tech Stats +100%"
     },
 
@@ -791,7 +791,7 @@ const techniquesData = [
       "tier3": "Wood Law +4%",
       "tier6": "Crit Block +2%",
       "tier9": "Wood Law +8%",
-      "tier12": "Water Law 10%",
+      "tier12": "Water Law +10%",
       "tier15": "Tech Stats +100%"
     },
     {
@@ -821,7 +821,7 @@ const techniquesData = [
       "tier3": "Metal Law +4%",
       "tier6": "Metal Law +6%",
       "tier9": "Wood Law +8%",
-      "tier12": "Metal Law 10%",
+      "tier12": "Metal Law +10%",
       "tier15": "Tech Stats +100%"
     },
     {
@@ -831,7 +831,7 @@ const techniquesData = [
       "tier3": "Crit Multiplier +3%",
       "tier6": "Monster DMG Reduction +2%",
       "tier9": "Crit Block +3%",
-      "tier12": "Earth Law 10%",
+      "tier12": "Earth Law +10%",
       "tier15": "Tech Stats +100%"
     },
 
@@ -892,7 +892,7 @@ const techniquesData = [
       "tier3": "Spiritium +2%",
       "tier6": "Control Chance Resist +10",
       "tier9": "Respira +7%",
-      "tier12": "Metal Law 10%",
+      "tier12": "Metal Law +10%",
       "tier15": "Tech Stats +100%"
     },
 
@@ -1360,21 +1360,6 @@ document.getElementById('effects-search').addEventListener('input', function () 
     });
 });
 
-// Function to filter the effects list based on search input
-document.getElementById('effects-search').addEventListener('input', function () {
-    const searchValue = this.value.toLowerCase();
-    const effectsItems = document.querySelectorAll('#effects-list li');
-
-    effectsItems.forEach((item) => {
-        const effectName = item.textContent.toLowerCase();
-        // Show or hide the list item based on the search query
-        if (effectName.includes(searchValue)) {
-            item.style.display = 'block';
-        } else {
-            item.style.display = 'none';
-        }
-    });
-});
 
 // Function to reset all selected cells and clear filters
 document.getElementById('reset-all').addEventListener('click', function () {
