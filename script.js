@@ -1389,3 +1389,19 @@ document.getElementById('reset-all').addEventListener('click', function () {
     // Reset the total stats summary if applicable
     document.getElementById('total-stats').textContent = 'No effects selected or parsed.';
 });
+
+// Function to remove all active filters and highlighted cells
+function removeFilters() {
+  // Remove the 'active' class from all effects list items
+  document.querySelectorAll('#effects-list li.active').forEach(item => {
+      item.classList.remove('active');
+  });
+
+  // Remove the 'effect-highlight' class from all table cells
+  document.querySelectorAll('#techniques-table td.effect-highlight').forEach(cell => {
+      cell.classList.remove('effect-highlight');
+  });
+}
+
+// Attach the removeFilters function to the Remove Filters button
+document.getElementById('remove-filters').addEventListener('click', removeFilters);
