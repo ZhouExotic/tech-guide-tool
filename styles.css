@@ -12,8 +12,8 @@ body {
 .content-container {
     display: flex;
     gap: 10px;
-    align-items: flex-start;
-    padding: 20px;
+    align-items: flex-start; /* Ensure everything aligns to the top */
+    padding: 0; /* Remove extra padding */
 }
 
 /* Styling for the sidebar */
@@ -30,6 +30,7 @@ body {
     height: fit-content;
     overflow-y: auto;
     max-height: 80vh;
+    margin-top: 0; /* Ensure no extra margin at the top */
 }
 
 /* Ensure the button stays at the bottom of the summary sidebar */
@@ -40,10 +41,44 @@ body {
     height: 100%;
 }
 
+/* Effects Sidebar Fix */
+#effects-sidebar {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    max-height: 80vh; /* Max height of the sidebar */
+}
+
+/* Ensure the effects list takes up available space and scrolls */
+#effects-list {
+    flex-grow: 1;
+    overflow-y: auto; /* Allow scrolling for the list */
+    padding: 0;
+    margin: 0;
+}
+
+/* Ensure the Remove Filters button stays at the bottom */
+#remove-filters {
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #388E3C;
+    color: #ffffff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-align: center;
+    transition: background-color 0.3s;
+}
+
+#remove-filters:hover {
+    background-color: #2e7d32;
+}
+
 /* Container styling for the table */
 .table-container {
     flex: 1;
     overflow-x: auto;
+    margin-top: 0; /* Ensure the table container aligns with the sidebar */
 }
 
 /* Basic styling for the dark mode table */
@@ -51,7 +86,7 @@ body {
     width: 100%;
     min-width: 900px;
     border-collapse: collapse;
-    margin: 10px auto;
+    margin: 0 auto; /* Remove any extra margin */
     font-size: 14px;
     text-align: left;
     background-color: #1e1e1e;
@@ -193,4 +228,16 @@ button:hover {
     font-weight: bold; /* Make the text bold */
 }
 
+/* Credits outside the summary sidebar */
+.credits-outside {
+    font-size: 12px;
+    text-align: center;
+    color: #888;
+    margin-top: auto; /* Push the credits to the bottom */
+    padding: 10px 0;
+    opacity: 0.7; /* Slight transparency */
+}
 
+.credits-outside:hover {
+    opacity: 1;
+}
