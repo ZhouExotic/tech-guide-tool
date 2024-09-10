@@ -127,7 +127,7 @@ body {
 
 /* Style for cells highlighted via sidebar search */
 #techniques-table td.effect-highlight {
-    border: 2px solid #ffd700;
+    border: 2px solid #ffd700 !important;
     background-color: #333333;
 }
 
