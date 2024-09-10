@@ -127,18 +127,17 @@ body {
 
 /* Style for cells highlighted via sidebar search */
 #techniques-table td.effect-highlight {
-    border: 2px solid #ffd700 !important;
+    border: 1px solid #ffd700 !important;
 }
 
 #techniques-table td.marked.effect-highlight {
-    border: 2px solid #ffd700 !important; /* Highlight border */
+    border: 1px solid #ffd700 !important; /* Highlight border */
     background-color: #1D491F !important; /* Keep the marked green background */
 }
 
 /* Group dividers to separate Ranks */
 #techniques-table tr.group-divider td {
     border-top: 4px dashed #21313a; /* Use a dashed line with a subtle blue-grey color */
-    padding-top: 10px; /* Add some spacing to distinguish the groups */
 }
 
 /* Hover effect */
