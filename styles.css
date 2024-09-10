@@ -61,7 +61,7 @@ body {
 #remove-filters {
     margin-top: 10px;
     padding: 10px;
-    background-color: #388E3C;
+    background-color: #1D491F;
     color: #ffffff;
     border: none;
     border-radius: 4px;
@@ -71,7 +71,7 @@ body {
 }
 
 #remove-filters:hover {
-    background-color: #2e7d32;
+    background-color: #193f1b;
 }
 
 /* Container styling for the table */
@@ -120,9 +120,9 @@ body {
 
 /* Style for marked cells when clicked - prioritize this style */
 #techniques-table td.marked {
-    background-color: #388E3C !important; /* Strong green fill to indicate marked state */
+    background-color: #1D491F !important; /* Strong green fill to indicate marked state */
     color: #ffffff !important;
-    border: 2px solid #2e7d32; /* Slightly darker border for marked cells */
+    border: 2px solid #193f1b; /* Slightly darker border for marked cells */
 }
 
 /* Style for cells highlighted via sidebar search */
@@ -133,7 +133,7 @@ body {
 
 /* Ensure marked cells fill is prioritized over highlighted state */
 #techniques-table td.marked.effect-highlight {
-    background-color: #388E3C !important; /* Keep the marked fill color */
+    background-color: #1D491F !important; /* Keep the marked fill color */
     color: #ffffff !important; /* Keep text color consistent */
 }
 
@@ -163,7 +163,7 @@ body {
 
 /* Active effect style in sidebar */
 #effects-list li.active {
-    background-color: #388E3C; /* Indicate which effect is currently highlighted */
+    background-color: #1D491F; /* Indicate which effect is currently highlighted */
     color: #ffffff;
 }
 
@@ -187,7 +187,7 @@ body {
 
 button {
     padding: 5px 10px;
-    background-color: #388E3C; /* Darker green for better contrast */
+    background-color: #1D491F; /* Darker green for better contrast */
     color: #ffffff; /* White text */
     border: none;
     border-radius: 4px;
@@ -197,7 +197,7 @@ button {
 }
 
 button:hover {
-    background-color: #2e7d32; /* Slightly darker green on hover */
+    background-color: #193f1b; /* Slightly darker green on hover */
 }
 
 /* Styling for the reset button */
@@ -207,7 +207,7 @@ button:hover {
     width: 90%;
     padding: 10px;
     margin: 10px auto;
-    background-color: #388E3C;
+    background-color: #1D491F;
     color: #ffffff;
     border: none;
     border-radius: 4px;
@@ -217,7 +217,7 @@ button:hover {
 }
 
 .reset-button:hover {
-    background-color: #388E3C;
+    background-color: #1D491F;
 }
 
 /* Darken the Technique Name column to indicate it is not clickable */
