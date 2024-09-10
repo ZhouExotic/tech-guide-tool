@@ -1410,33 +1410,35 @@ document.getElementById('remove-filters').addEventListener('click', removeFilter
 function getSelectedTechniques() {
   const selected = [];
   const rows = document.querySelectorAll('#techniques-table tbody tr');
-  
-  rows.forEach((row, index) => {
-      const isSelected = row.querySelector('.marked');
-      if (isSelected) {
-          selected.push(index); // Store the row index for simplicity
-      }
+
+  rows.forEach((row, rowIndex) => {
+      const cells = row.querySelectorAll('td:not(:first-child):not(:nth-child(2))'); // Exclude Rank and Technique Name
+      cells.forEach((cell, colIndex) => {
+          if (cell.classList.contains('marked')) {
+              selected.push({ row: rowIndex, col: colIndex + 2 }); // Store row index and actual column index (adjusted for excluded columns)
+          }
+      });
   });
+
   return selected;
 }
+
 
 // Function to apply selected techniques from decoded state
 function applyStateToTool(state) {
   const rows = document.querySelectorAll('#techniques-table tbody tr');
 
-  // Apply selected techniques
-  state.selectedTechniques.forEach(index => {
-      const row = rows[index];
-      const techniqueCells = row.querySelectorAll('td:not(:first-child):not(:nth-child(2))'); // Exclude Rank and Technique Name columns
-      techniqueCells.forEach(cell => {
-          cell.classList.add('marked'); // Mark only the appropriate cells (not Rank or Technique Name)
-      });
+  // Apply marked cells
+  state.selectedTechniques.forEach(({ row, col }) => {
+      const cell = rows[row].querySelectorAll('td')[col]; // Access the specific cell
+      if (cell) {
+          cell.classList.add('marked'); // Mark the specific cell
+      }
   });
 
   // Recalculate the total stats after applying selections
   recalculateTotalStats();
 }
-
 // Function to recalculate total stats
 function recalculateTotalStats() {
   let totalStats = 0;
