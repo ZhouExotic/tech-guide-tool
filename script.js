@@ -1454,7 +1454,7 @@ function recalculateTotalStats() {
   statsElement.innerText = `Total Stats: ${totalStats}`;
 }
 
-// Function to generate a shareable link
+// Function to generate the shareable link
 function generateShareableLink() {
   const currentState = {
       selectedTechniques: getSelectedTechniques(),
@@ -1463,9 +1463,33 @@ function generateShareableLink() {
   const encodedState = encodeURIComponent(jsonString);
   const shareableLink = `${window.location.origin}${window.location.pathname}?state=${encodedState}`;
   
-  // Display the link (you can customize how to display it)
-  alert(`Share this link: ${shareableLink}`);
+  // Display the link in the textarea and show the copy button
+  const linkField = document.getElementById('shareable-link-field');
+  const copyButton = document.getElementById('copy-link-button');
+  
+  linkField.style.display = 'block';
+  copyButton.style.display = 'block';
+  linkField.value = shareableLink;
 }
+
+// Function to copy the link to the clipboard using the modern Clipboard API
+function copyLinkToClipboard() {
+  const linkField = document.getElementById('shareable-link-field');
+
+  // Use the Clipboard API to copy the value of the textarea
+  navigator.clipboard.writeText(linkField.value)
+  .then(() => {
+      alert('Link copied to clipboard!');
+  })
+  .catch(err => {
+      console.error('Failed to copy link: ', err);
+  });
+}
+
+// Automatically select the link when the textarea is clicked
+document.getElementById('shareable-link-field').addEventListener('click', function() {
+  this.select();
+});
 
 // Function to load state from the URL if present
 function loadStateFromURL() {
