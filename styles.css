@@ -123,7 +123,6 @@ body {
 #techniques-table td.marked {
     background-color: #1D491F;  /* Strong green fill to indicate marked state */
     color: #ffffff;
-    border: 2px solid #193f1b; /* Slightly darker border for marked cells */
 }
 
 /* Style for cells highlighted via sidebar search */
