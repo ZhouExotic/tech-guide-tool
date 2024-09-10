@@ -1143,145 +1143,145 @@ const techniquesData = [
 
 // Function to initialize the table and make cells clickable
 function initializeTable() {
-  const tbody = document.querySelector('#techniques-table tbody');
-  let previousGroup = ""; // To track the current group (e.g., R3, R4, etc.)
+    const tbody = document.querySelector('#techniques-table tbody');
+    let previousGroup = ""; // To track the current group (e.g., R3, R4, etc.)
 
-  techniquesData.forEach((tech, rowIndex) => {
-      const row = document.createElement('tr');
+    techniquesData.forEach((tech, rowIndex) => {
+        const row = document.createElement('tr');
 
-      // Check if the current row starts a new group (e.g., based on 'rank' value)
-      if (tech.rank && tech.rank !== previousGroup) {
-          row.classList.add('group-divider');
-          previousGroup = tech.rank;
-      }
+        // Check if the current row starts a new group (e.g., based on 'rank' value)
+        if (tech.rank && tech.rank !== previousGroup) {
+            row.classList.add('group-divider');
+            previousGroup = tech.rank;
+        }
 
-      // Create cells for rank and name
-      row.innerHTML = `
-          <td>${tech.rank}</td>
-          <td>${tech.name}</td>
-      `;
+        // Create cells for rank and name
+        row.innerHTML = `
+            <td>${tech.rank}</td>
+            <td>${tech.name}</td>
+        `;
 
-      // Create cells for unlock and tiers, making them clickable
-      ['unlock', 'tier3', 'tier6', 'tier9', 'tier12', 'tier15'].forEach((tier, tierIndex) => {
-          const cell = document.createElement('td');
-          if (tech[tier]) {
-              cell.textContent = tech[tier];
-              cell.addEventListener('click', () => {
-                  cell.classList.toggle('marked'); // Toggle the marked state
-                  updateSummary(); // Update the summary based on marked cells
-                  saveMarkedState(); // Save the marked state to localStorage
-              });
-              // Check localStorage for previously marked cells
-              const markedCells = JSON.parse(localStorage.getItem('markedCells') || '[]');
-              if (markedCells.includes(`${rowIndex}-${tierIndex}`)) {
-                  cell.classList.add('marked'); // Reapply marked class if previously saved
-              }
-          } else {
-              cell.textContent = ''; // No content in the cell
-          }
-          row.appendChild(cell);
-      });
+        // Create cells for unlock and tiers, making them clickable
+        ['unlock', 'tier3', 'tier6', 'tier9', 'tier12', 'tier15'].forEach((tier, tierIndex) => {
+            const cell = document.createElement('td');
+            if (tech[tier]) {
+                cell.textContent = tech[tier];
+                cell.addEventListener('click', () => {
+                    cell.classList.toggle('marked'); // Toggle the marked state
+                    updateSummary(); // Update the summary based on marked cells
+                    saveMarkedState(); // Save the marked state to localStorage
+                });
+                // Check localStorage for previously marked cells
+                const markedCells = JSON.parse(localStorage.getItem('markedCells') || '[]');
+                if (markedCells.includes(`${rowIndex}-${tierIndex}`)) {
+                    cell.classList.add('marked'); // Reapply marked class if previously saved
+                }
+            } else {
+                cell.textContent = ''; // No content in the cell
+            }
+            row.appendChild(cell);
+        });
 
-      // Add the "Select All" button
-      const selectAllCell = document.createElement('td');
-      const selectAllButton = document.createElement('button');
-      selectAllButton.textContent = 'Select All'; // Add label for the button
-      selectAllButton.addEventListener('click', () => {
-          toggleSelectRow(row); // Call the function to mark all cells in the row
-          updateSummary(); // Update the summary based on marked cells
-          saveMarkedState(); // Save the marked state to localStorage
-      });
-      selectAllCell.appendChild(selectAllButton); // Append the button to the cell
-      row.appendChild(selectAllCell);
+        // Add the "Select All" button
+        const selectAllCell = document.createElement('td');
+        const selectAllButton = document.createElement('button');
+        selectAllButton.textContent = 'Select All'; // Add label for the button
+        selectAllButton.addEventListener('click', () => {
+            toggleSelectRow(row); // Call the function to mark all cells in the row
+            updateSummary(); // Update the summary based on marked cells
+            saveMarkedState(); // Save the marked state to localStorage
+        });
+        selectAllCell.appendChild(selectAllButton); // Append the button to the cell
+        row.appendChild(selectAllCell);
 
-      tbody.appendChild(row);
-  });
+        tbody.appendChild(row);
+    });
 }
 
 // Function to toggle selection for all cells in a row, but skip empty cells and non-tier cells
 function toggleSelectRow(row) {
-  const cells = row.querySelectorAll('td');
-  cells.forEach((cell, colIndex) => {
-      // Skip the first two cells (Rank, Name), the last cell (Select All button), and empty cells
-      if (colIndex > 1 && !cell.querySelector('button') && cell.textContent.trim() !== '') {
-          cell.classList.toggle('marked');  // Toggle the "marked" class for cells with content
-      }
-  });
+    const cells = row.querySelectorAll('td');
+    cells.forEach((cell, colIndex) => {
+        // Skip the first two cells (Rank, Name), the last cell (Select All button), and empty cells
+        if (colIndex > 1 && !cell.querySelector('button') && cell.textContent.trim() !== '') {
+            cell.classList.toggle('marked');  // Toggle the "marked" class for cells with content
+        }
+    });
 }
 
 // Function to update the total stats summary based on marked cells
 function updateSummary() {
-  const effectsSummary = {};
-  const markedCells = document.querySelectorAll('#techniques-table td.marked');
+    const effectsSummary = {};
+    const markedCells = document.querySelectorAll('#techniques-table td.marked');
 
-  markedCells.forEach(cell => {
-      const effect = cell.textContent;
-      const match = effect.match(/(.+?)\s\+([\d.]+)(K|%?)/i);
+    markedCells.forEach(cell => {
+        const effect = cell.textContent;
+        const match = effect.match(/(.+?)\s\+([\d.]+)(K|%?)/i);
 
-      if (match) {
-          const effectName = match[1].trim();
-          let numericValue = parseFloat(match[2]);
-          const unit = match[3];
+        if (match) {
+            const effectName = match[1].trim();
+            let numericValue = parseFloat(match[2]);
+            const unit = match[3];
 
-          // Adjust the value if it's in thousands (K)
-          if (unit.toLowerCase() === 'k') {
-              numericValue *= 1000;
-          }
+            // Adjust the value if it's in thousands (K)
+            if (unit.toLowerCase() === 'k') {
+                numericValue *= 1000;
+            }
 
-          if (!isNaN(numericValue)) {
-              if (!effectsSummary[effectName]) {
-                  effectsSummary[effectName] = { value: 0, unit: unit };
-              }
-              effectsSummary[effectName].value += numericValue;
-          }
-      }
-  });
+            if (!isNaN(numericValue)) {
+                if (!effectsSummary[effectName]) {
+                    effectsSummary[effectName] = { value: 0, unit: unit };
+                }
+                effectsSummary[effectName].value += numericValue;
+            }
+        }
+    });
 
-  // Format numbers with "K" for clarity if they are in the thousands
-  const formatValue = (value, unit) => {
-      if (value >= 1000 && !unit.includes('%')) {
-          return `${(value / 1000).toFixed(1)}K`;
-      }
-      return `${value}${unit}`;
-  };
+    // Format numbers with "K" for clarity if they are in the thousands
+    const formatValue = (value, unit) => {
+        if (value >= 1000 && !unit.includes('%')) {
+            return `${(value / 1000).toFixed(1)}K`;
+        }
+        return `${value}${unit}`;
+    };
 
-  // Display the formatted summary
-  const summaryElement = document.getElementById('total-stats');
-  summaryElement.innerHTML = Object.keys(effectsSummary).length
-      ? Object.entries(effectsSummary)
-          .map(([key, { value, unit }]) => `${key}: +${formatValue(value, unit)}`)
-          .join('<br>')
-      : "No effects selected or parsed.";
+    // Display the formatted summary
+    const summaryElement = document.getElementById('total-stats');
+    summaryElement.innerHTML = Object.keys(effectsSummary).length
+        ? Object.entries(effectsSummary)
+            .map(([key, { value, unit }]) => `${key}: +${formatValue(value, unit)}`)
+            .join('<br>')
+        : "No effects selected or parsed.";
 }
 
 // Function to save marked cells to localStorage, but skip non-tier cells
 function saveMarkedState() {
-  const markedCells = [];
-  const rows = document.querySelectorAll('#techniques-table tbody tr');
-  rows.forEach((row, rowIndex) => {
-      const cells = row.querySelectorAll('td');
-      cells.forEach((cell, colIndex) => {
-          // Skip the first two cells (Rank, Name) and the last cell (Select All button)
-          if (colIndex > 1 && !cell.querySelector('button') && cell.classList.contains('marked')) {
-              markedCells.push(`${rowIndex}-${colIndex - 2}`); // Adjust column index for the tiers
-          }
-      });
-  });
-  localStorage.setItem('markedCells', JSON.stringify(markedCells));
+    const markedCells = [];
+    const rows = document.querySelectorAll('#techniques-table tbody tr');
+    rows.forEach((row, rowIndex) => {
+        const cells = row.querySelectorAll('td');
+        cells.forEach((cell, colIndex) => {
+            // Skip the first two cells (Rank, Name) and the last cell (Select All button)
+            if (colIndex > 1 && !cell.querySelector('button') && cell.classList.contains('marked')) {
+                markedCells.push(`${rowIndex}-${colIndex - 2}`); // Adjust column index for the tiers
+            }
+        });
+    });
+    localStorage.setItem('markedCells', JSON.stringify(markedCells));
 }
 
 // Function to reset all marked cells
 function resetAllMarkedCells() {
-  // Remove the 'marked' class from all cells
-  document.querySelectorAll('#techniques-table td.marked').forEach(cell => {
-      cell.classList.remove('marked');
-  });
+    // Remove the 'marked' class from all cells
+    document.querySelectorAll('#techniques-table td.marked').forEach(cell => {
+        cell.classList.remove('marked');
+    });
 
-  // Clear the localStorage as well
-  localStorage.removeItem('markedCells');
+    // Clear the localStorage as well
+    localStorage.removeItem('markedCells');
 
-  // Reset the summary
-  updateSummary();
+    // Reset the summary
+    updateSummary();
 }
 
 // Attach the reset function to the Reset All button
@@ -1289,118 +1289,118 @@ document.getElementById('reset-all').addEventListener('click', resetAllMarkedCel
 
 // Call the initialization and populate the effects list on page load
 document.addEventListener('DOMContentLoaded', () => {
-  initializeTable();
-  populateEffectsList(); // Populate the effects list for highlighting functionality
-  updateSummary(); // Ensure summary is calculated after loading marked cells
+    initializeTable();
+    populateEffectsList(); // Populate the effects list for highlighting functionality
+    updateSummary(); // Ensure summary is calculated after loading marked cells
 });
 
 
 
 // Function to extract unique effects, consolidate by base name, and sort alphabetically
 function populateEffectsList() {
-  const effectsSet = new Set();
+    const effectsSet = new Set();
 
-  techniquesData.forEach((tech) => {
-      ['unlock', 'tier3', 'tier6', 'tier9', 'tier12', 'tier15'].forEach((tier) => {
-          if (tech[tier]) {
-              // Extract the base effect name while preserving proper formatting
-              const effectName = tech[tier]
-                  .replace(/\s*\+\s*[\d.]+(K|%)?\s*/gi, '') // Remove quantities and units, keeping spaces intact
-                  .replace(/\s+/g, ' ') // Normalize spaces to single spaces
-                  .trim();
+    techniquesData.forEach((tech) => {
+        ['unlock', 'tier3', 'tier6', 'tier9', 'tier12', 'tier15'].forEach((tier) => {
+            if (tech[tier]) {
+                // Extract the base effect name while preserving proper formatting
+                const effectName = tech[tier]
+                    .replace(/\s*\+\s*[\d.]+(K|%)?\s*/gi, '') // Remove quantities and units, keeping spaces intact
+                    .replace(/\s+/g, ' ') // Normalize spaces to single spaces
+                    .trim();
 
-              effectsSet.add(effectName);
-          }
-      });
-  });
+                effectsSet.add(effectName);
+            }
+        });
+    });
 
-  // Convert the set to an array and sort alphabetically
-  const sortedEffects = Array.from(effectsSet).sort();
+    // Convert the set to an array and sort alphabetically
+    const sortedEffects = Array.from(effectsSet).sort();
 
-  const effectsList = document.getElementById('effects-list');
-  sortedEffects.forEach((effect) => {
-      const listItem = document.createElement('li');
-      listItem.textContent = effect;
-      listItem.addEventListener('click', () => toggleHighlightEffect(effect, listItem));
-      effectsList.appendChild(listItem);
-  });
+    const effectsList = document.getElementById('effects-list');
+    sortedEffects.forEach((effect) => {
+        const listItem = document.createElement('li');
+        listItem.textContent = effect;
+        listItem.addEventListener('click', () => toggleHighlightEffect(effect, listItem));
+        effectsList.appendChild(listItem);
+    });
 }
 
 // Function to toggle highlight and indicate active effect in the sidebar with exact matching
 function toggleHighlightEffect(effect, listItem) {
-  // Toggle the active class on the sidebar item
-  listItem.classList.toggle('active');
+    // Toggle the active class on the sidebar item
+    listItem.classList.toggle('active');
 
-  // Use a regex to match the base effect name and include any trailing quantities
-  const regex = new RegExp(`^${effect}\\s*\\+?\\d*(K|%|\\s+)?$`, 'i');
+    // Use a regex to match the base effect name and include any trailing quantities
+    const regex = new RegExp(`^${effect}\\s*\\+?\\d*(K|%|\\s+)?$`, 'i');
 
-  // Toggle highlight of matching cells based on the base effect name
-  const cells = document.querySelectorAll('#techniques-table td');
-  cells.forEach(cell => {
-      // Match the base effect name allowing for any percentage or quantity
-      if (regex.test(cell.textContent.trim())) {
-          cell.classList.toggle('effect-highlight'); // Toggle highlight state
-      }
-  });
+    // Toggle highlight of matching cells based on the base effect name
+    const cells = document.querySelectorAll('#techniques-table td');
+    cells.forEach(cell => {
+        // Match the base effect name allowing for any percentage or quantity
+        if (regex.test(cell.textContent.trim())) {
+            cell.classList.toggle('effect-highlight'); // Toggle highlight state
+        }
+    });
 }
 
 // Function to filter the effects list based on search input
 document.getElementById('effects-search').addEventListener('input', function () {
-  const searchValue = this.value.toLowerCase();
-  const effectsItems = document.querySelectorAll('#effects-list li');
+    const searchValue = this.value.toLowerCase();
+    const effectsItems = document.querySelectorAll('#effects-list li');
 
-  effectsItems.forEach((item) => {
-      const effectName = item.textContent.toLowerCase();
-      // Show or hide the list item based on the search query
-      if (effectName.includes(searchValue)) {
-          item.style.display = 'block';
-      } else {
-          item.style.display = 'none';
-      }
-  });
+    effectsItems.forEach((item) => {
+        const effectName = item.textContent.toLowerCase();
+        // Show or hide the list item based on the search query
+        if (effectName.includes(searchValue)) {
+            item.style.display = 'block';
+        } else {
+            item.style.display = 'none';
+        }
+    });
 });
 
 
 // Function to reset all selected cells and clear filters
 document.getElementById('reset-all').addEventListener('click', function () {
-  // Clear all marked cells
-  document.querySelectorAll('#techniques-table td.marked').forEach(cell => {
-      cell.classList.remove('marked');
-  });
+    // Clear all marked cells
+    document.querySelectorAll('#techniques-table td.marked').forEach(cell => {
+        cell.classList.remove('marked');
+    });
 
-  // Reset the effects search input
-  document.getElementById('effects-search').value = '';
+    // Reset the effects search input
+    document.getElementById('effects-search').value = '';
 
-  // Reset all filtered effects and show all items
-  document.querySelectorAll('#effects-list li').forEach(item => {
-      item.style.display = 'block';
-  });
+    // Reset all filtered effects and show all items
+    document.querySelectorAll('#effects-list li').forEach(item => {
+        item.style.display = 'block';
+    });
 
-  // Optionally, uncheck any checkboxes or other reset actions if needed
-  document.querySelectorAll('#techniques-table input[type="checkbox"]').forEach(checkbox => {
-      checkbox.checked = false;
-  });
+    // Optionally, uncheck any checkboxes or other reset actions if needed
+    document.querySelectorAll('#techniques-table input[type="checkbox"]').forEach(checkbox => {
+        checkbox.checked = false;
+    });
 
-  // Clear any highlights or other visual effects
-  document.querySelectorAll('#techniques-table td.effect-highlight').forEach(cell => {
-      cell.classList.remove('effect-highlight');
-  });
+    // Clear any highlights or other visual effects
+    document.querySelectorAll('#techniques-table td.effect-highlight').forEach(cell => {
+        cell.classList.remove('effect-highlight');
+    });
 
-  // Reset the total stats summary if applicable
-  document.getElementById('total-stats').textContent = 'No effects selected or parsed.';
+    // Reset the total stats summary if applicable
+    document.getElementById('total-stats').textContent = 'No effects selected or parsed.';
 });
 
 // Function to remove all active filters and highlighted cells
 function removeFilters() {
-// Remove the 'active' class from all effects list items
-document.querySelectorAll('#effects-list li.active').forEach(item => {
-    item.classList.remove('active');
-});
+  // Remove the 'active' class from all effects list items
+  document.querySelectorAll('#effects-list li.active').forEach(item => {
+      item.classList.remove('active');
+  });
 
-// Remove the 'effect-highlight' class from all table cells
-document.querySelectorAll('#techniques-table td.effect-highlight').forEach(cell => {
-    cell.classList.remove('effect-highlight');
-});
+  // Remove the 'effect-highlight' class from all table cells
+  document.querySelectorAll('#techniques-table td.effect-highlight').forEach(cell => {
+      cell.classList.remove('effect-highlight');
+  });
 }
 
 // Attach the removeFilters function to the Remove Filters button
@@ -1408,73 +1408,73 @@ document.getElementById('remove-filters').addEventListener('click', removeFilter
 
 // Function to get selected techniques
 function getSelectedTechniques() {
-  const selected = [];
-  const rows = document.querySelectorAll('#techniques-table tbody tr');
-  
-  rows.forEach((row, index) => {
-      const isSelected = row.querySelector('.marked');
-      if (isSelected) {
-          selected.push(index); // Store the row index for simplicity
-      }
-  });
-  return selected;
+    const selected = [];
+    const rows = document.querySelectorAll('#techniques-table tbody tr');
+    
+    rows.forEach((row, index) => {
+        const isSelected = row.querySelector('.marked');
+        if (isSelected) {
+            selected.push(index); // Store the row index for simplicity
+        }
+    });
+    return selected;
 }
 
 // Function to apply selected techniques from decoded state
 function applyStateToTool(state) {
-  const rows = document.querySelectorAll('#techniques-table tbody tr');
+    const rows = document.querySelectorAll('#techniques-table tbody tr');
 
-  // Apply selected techniques
-  state.selectedTechniques.forEach(index => {
-      rows[index].querySelector('td').classList.add('marked');
-  });
+    // Apply selected techniques
+    state.selectedTechniques.forEach(index => {
+        rows[index].querySelector('td').classList.add('marked');
+    });
 
-  // Recalculate the total stats after applying selections
-  recalculateTotalStats();
+    // Recalculate the total stats after applying selections
+    recalculateTotalStats();
 }
 
 // Function to recalculate total stats
 function recalculateTotalStats() {
-  let totalStats = 0;
-  const markedCells = document.querySelectorAll('#techniques-table td.marked');
-  
-  markedCells.forEach(cell => {
-      // Placeholder logic to add stats based on marked cells
-      totalStats += 1; // Example logic
-  });
-  
-  // Update the total stats UI
-  const statsElement = document.getElementById('total-stats');
-  statsElement.innerText = `Total Stats: ${totalStats}`;
+    let totalStats = 0;
+    const markedCells = document.querySelectorAll('#techniques-table td.marked');
+    
+    markedCells.forEach(cell => {
+        // Placeholder logic to add stats based on marked cells
+        totalStats += 1; // Example logic
+    });
+    
+    // Update the total stats UI
+    const statsElement = document.getElementById('total-stats');
+    statsElement.innerText = `Total Stats: ${totalStats}`;
 }
 
 // Function to generate a shareable link
 function generateShareableLink() {
-  const currentState = {
-      selectedTechniques: getSelectedTechniques(),
-  };
-  const jsonString = JSON.stringify(currentState);
-  const encodedState = encodeURIComponent(jsonString);
-  const shareableLink = `${window.location.origin}${window.location.pathname}?state=${encodedState}`;
-  
-  // Display the link (you can customize how to display it)
-  alert(`Share this link: ${shareableLink}`);
+    const currentState = {
+        selectedTechniques: getSelectedTechniques(),
+    };
+    const jsonString = JSON.stringify(currentState);
+    const encodedState = encodeURIComponent(jsonString);
+    const shareableLink = `${window.location.origin}${window.location.pathname}?state=${encodedState}`;
+    
+    // Display the link (you can customize how to display it)
+    alert(`Share this link: ${shareableLink}`);
 }
 
 // Function to load state from the URL if present
 function loadStateFromURL() {
-  const params = new URLSearchParams(window.location.search);
-  const encodedState = params.get('state');
-  
-  if (encodedState) {
-      try {
-          const jsonString = decodeURIComponent(encodedState);
-          const state = JSON.parse(jsonString);
-          applyStateToTool(state);
-      } catch (error) {
-          console.error("Error decoding state from URL:", error);
-      }
-  }
+    const params = new URLSearchParams(window.location.search);
+    const encodedState = params.get('state');
+    
+    if (encodedState) {
+        try {
+            const jsonString = decodeURIComponent(encodedState);
+            const state = JSON.parse(jsonString);
+            applyStateToTool(state);
+        } catch (error) {
+            console.error("Error decoding state from URL:", error);
+        }
+    }
 }
 
 // Event listener for the "Generate Shareable Link" button
@@ -1482,3 +1482,4 @@ document.getElementById('generate-shareable-link').addEventListener('click', gen
 
 // Ensure state is loaded from the URL when the page loads
 window.onload = loadStateFromURL;
+
