@@ -1426,7 +1426,11 @@ function applyStateToTool(state) {
 
   // Apply selected techniques
   state.selectedTechniques.forEach(index => {
-      rows[index].querySelector('td').classList.add('marked');
+      const row = rows[index];
+      const techniqueCells = row.querySelectorAll('td:not(:first-child):not(:nth-child(2))'); // Exclude Rank and Technique Name columns
+      techniqueCells.forEach(cell => {
+          cell.classList.add('marked'); // Mark only the appropriate cells (not Rank or Technique Name)
+      });
   });
 
   // Recalculate the total stats after applying selections
