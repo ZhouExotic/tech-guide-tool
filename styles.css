@@ -120,21 +120,14 @@ body {
 
 /* Style for marked cells when clicked - prioritize this style */
 #techniques-table td.marked {
-    background-color: #1D491F !important; /* Strong green fill to indicate marked state */
-    color: #ffffff !important;
+    background-color: #1D491F;  /* Strong green fill to indicate marked state */
+    color: #ffffff;
     border: 2px solid #193f1b; /* Slightly darker border for marked cells */
 }
 
 /* Style for cells highlighted via sidebar search */
 #techniques-table td.effect-highlight {
     border: 2px solid #ffd700 !important;
-    background-color: #333333;
-}
-
-/* Ensure marked cells fill is prioritized over highlighted state */
-#techniques-table td.marked.effect-highlight {
-    background-color: #1D491F !important; /* Keep the marked fill color */
-    color: #ffffff !important; /* Keep text color consistent */
 }
 
 /* Group dividers to separate Ranks */
