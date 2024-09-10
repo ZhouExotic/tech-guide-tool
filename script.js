@@ -1510,5 +1510,8 @@ function loadStateFromURL() {
 // Event listener for the "Generate Shareable Link" button
 document.getElementById('generate-shareable-link').addEventListener('click', generateShareableLink);
 
+// Event listener for the "Copy Link" button
+document.getElementById('copy-link-button').addEventListener('click', copyLinkToClipboard);
+
 // Ensure state is loaded from the URL when the page loads
 window.onload = loadStateFromURL;
