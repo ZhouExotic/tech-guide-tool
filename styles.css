@@ -85,7 +85,6 @@ body {
 #techniques-table {
     width: 100%;
     min-width: 900px;
-    border-collapse: collapse;
     margin: 0 auto; /* Remove any extra margin */
     font-size: 14px;
     text-align: left;
@@ -95,6 +94,8 @@ body {
     overflow: hidden;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
     border: none;
+    border-collapse: separate;
+    border-spacing: 0; /* Add this to ensure no unwanted spacing */
 }
 
 /* Header styling */
