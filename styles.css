@@ -250,7 +250,7 @@ button:hover {
     padding: 10px; /* Padding for better spacing */
     font-size: 14px; /* Consistent font size */
     margin-top: 10px; /* Space above */
-    width: 90%; /* Ensures full width minus the padding */
+    width: 60%; /* Ensures full width minus the padding */
     display: none; /* Hidden initially */
 }
 
