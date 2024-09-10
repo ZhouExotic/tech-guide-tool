@@ -1437,21 +1437,7 @@ function applyStateToTool(state) {
   });
 
   // Recalculate the total stats after applying selections
-  recalculateTotalStats();
-}
-// Function to recalculate total stats
-function recalculateTotalStats() {
-  let totalStats = 0;
-  const markedCells = document.querySelectorAll('#techniques-table td.marked');
-  
-  markedCells.forEach(cell => {
-      // Placeholder logic to add stats based on marked cells
-      totalStats += 1; // Example logic
-  });
-  
-  // Update the total stats UI
-  const statsElement = document.getElementById('total-stats');
-  statsElement.innerText = `Total Stats: ${totalStats}`;
+  updateSummary();
 }
 
 // Function to generate the shareable link
